@@ -5,6 +5,8 @@ const path = require("path");
 const { errorHandler, notFound } = require("./middleware/errorMiddleware.js");
 const cors = require("cors");
 const router = require("./routes/UserRoute.js");
+const gamerouter = require("./routes/GamesRoute.js");
+const gamehistoryrouter = require("./routes/GameHistoryRoute.js");
 const connectDB = require("./config/db.js");
 dotenv.config();
 
@@ -25,6 +27,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/api/user", router);
+app.use("/api/game", gamerouter);
+app.use("/api/gmhistory", gamehistoryrouter);
 
 // --------------------------deployment------------------------------
 

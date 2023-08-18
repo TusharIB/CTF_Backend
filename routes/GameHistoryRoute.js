@@ -1,6 +1,19 @@
 // gameHistoryRoutes.js
-import express from 'express';
-import GameHistory from './gameHistoryModel.js';
+const express = require('express');
+const mongoose = require('mongoose');
+
+
+
+const gameHistorySchema = new mongoose.Schema({
+  main_address: String,
+  game_id: String,
+  result: Boolean,
+  game_name: String,
+  game_answer: String,
+  created_at: { type: Date, default: Date.now },
+});
+
+const GameHistory = mongoose.model('GameHistory', gameHistorySchema);
 
 const router = express.Router();
 
@@ -47,4 +60,4 @@ router.put('/mark_result/:history_id', async (req, res) => {
   });
 
 
-export default router;
+  module.exports = router;
