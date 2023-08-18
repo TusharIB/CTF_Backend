@@ -1,6 +1,6 @@
 // gameHistoryRoutes.js
 import express from 'express';
-import GameHistory from './gameHistoryModel';
+import GameHistory from './gameHistoryModel.js';
 
 const router = express.Router();
 
