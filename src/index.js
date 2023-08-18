@@ -1,11 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/db.js";
 import path from "path";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 import cors from "cors";
 import router from "./routes/UserRoute.js";
+import connectDB from "./config/db.js";
 dotenv.config();
 
 connectDB();
