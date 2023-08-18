@@ -1,11 +1,11 @@
-import express from "express";
-import dotenv from "dotenv";
-import path from "path";
+const express = require("express");
+const dotenv = require("dotenv");
+const path = require("path");
 
-import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
-import cors from "cors";
-import router from "./routes/UserRoute.js";
-import connectDB from "./config/db.js";
+const { errorHandler, notFound } = require("./middleware/errorMiddleware.js");
+const cors = require("cors");
+const router = require("./routes/UserRoute.js");
+const connectDB = require("./config/db.js");
 dotenv.config();
 
 connectDB();
@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 app.use("/api/user", router);
 
 // --------------------------deployment------------------------------
-const __dirname = path.resolve();
+
 
 if (process.env.NODE_ENV === "production") {
   app.get("/", (req, res) => {

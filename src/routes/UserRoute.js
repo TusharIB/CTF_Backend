@@ -1,6 +1,5 @@
-// userRoutes.js
-import express from 'express';
-import User from '../models/UserModel.js';
+const express = require('express');
+const User = require('../models/UserModel.js');
 
 const router = express.Router();
 
@@ -51,4 +50,4 @@ router.get('/get_points/:main_address', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
