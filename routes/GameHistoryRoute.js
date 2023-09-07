@@ -15,19 +15,64 @@ const gameHistorySchema = new mongoose.Schema({
 
 const GameHistory = mongoose.model('GameHistory', gameHistorySchema);
 
+
+const userSchema = new mongoose.Schema({
+  name: String,
+  main_address: String,
+  created: { type: Date, default: Date.now },
+  total_wins: { type: Number, default: 0 },
+  points: { type: Number, default: 0 },
+  played_Events: [
+    {
+      event_id: String,
+      name: String,
+      result: { type: Boolean, default: false },
+    },
+  ],
+});
+
+const User = mongoose.model('User', userSchema);
+
+
 const router = express.Router();
 
 // Submit game answer for a user
+
 router.post('/submit_answer', async (req, res) => {
   try {
-    const newGameHistory = new GameHistory(req.body);
+    const { main_address, game_id, result, game_name, game_answer } = req.body;
+
+    // Create a new GameHistory entry
+    const newGameHistory = new GameHistory({
+      main_address,
+      game_id,
+      result,
+      game_name,
+      game_answer,
+    });
     const savedGameHistory = await newGameHistory.save();
+
+    // Update user's played_Events
+    const user = await User.findOne({ main_address });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const playedEvent = {
+      event_id: savedGameHistory._id, // Use the GameHistory _id as event_id
+      name: game_name,
+      result,
+    };
+
+    user.played_Events.push(playedEvent);
+    await user.save();
+
     res.status(201).json(savedGameHistory);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
 });
-
 
 router.put('/mark_result/:history_id', async (req, res) => {
     try {
