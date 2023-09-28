@@ -12,6 +12,9 @@ const gameSchema = new mongoose.Schema({
   explanation: String,
   captured: Boolean,
   address: String,
+  difficulty_level: Number,
+  solution: String, 
+  flag: String,
   created_date: { type: Date, default: Date.now }
 });
 
