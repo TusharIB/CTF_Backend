@@ -75,19 +75,16 @@ router.get('/check_game_played/:game_id', async (req, res) => {
     }
   });
 
-router.delete('/:game_id', async (req, res) => {
+router.delete('/game/:game_id', async (req, res) => {
   try {
-    const game = await Game.findOne({ game_id: req.params.game_id });
-    if (!game) {
+    const result = await Game.findOneAndRemove({ game_id: req.params.game_id });
+    if (!result) {
       return res.status(404).json({ message: 'Game not found' });
     }
     
-    // Perform the deletion
-    await game.remove();
-
     res.json({ message: 'Game deleted successfully' });
   } catch (error) {
-    console.log(error)
+    console.error('Error deleting game:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
