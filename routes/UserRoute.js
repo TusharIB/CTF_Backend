@@ -5,6 +5,16 @@ const User = require('../models/UserModel');
 
 const router = express.Router();
 
+
+router.get('/getall_users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Check if old user is present based on main_address
 router.get('/check_user/:main_address', async (req, res) => {
   try {
@@ -47,6 +57,22 @@ router.get('/get_points/:main_address', async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
     res.json({ points: user.points });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+router.delete('/delete_user/:main_address', async (req, res) => {
+  try {
+    const mainAddress = req.params.main_address;
+    const deletedUser = await User.findOneAndDelete({ main_address: mainAddress });
+
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
