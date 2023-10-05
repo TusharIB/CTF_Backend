@@ -22,6 +22,25 @@ const Game = mongoose.model('Game', gameSchema);
 
 const router = express.Router();
 
+
+router.put('/edit_game/:game_id', async (req, res) => {
+  try {
+    const game = await Game.findOneAndUpdate(
+      { game_id: req.params.game_id },
+      { $set: req.body },
+      { new: true }
+    );
+
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    res.json(game);
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // Get One Game by challengeName
 router.get('/game/:game_id', async (req, res) => {
   try {
