@@ -87,6 +87,7 @@ router.delete('/:game_id', async (req, res) => {
 
     res.json({ message: 'Game deleted successfully' });
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: 'Server error' });
   }
 });
