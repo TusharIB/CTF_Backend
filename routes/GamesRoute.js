@@ -75,4 +75,20 @@ router.get('/check_game_played/:game_id', async (req, res) => {
     }
   });
 
+router.delete('/game/:game_id', async (req, res) => {
+  try {
+    const game = await Game.findOne({ game_id: req.params.game_id });
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+    
+    // Perform the deletion
+    await game.remove();
+
+    res.json({ message: 'Game deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;
