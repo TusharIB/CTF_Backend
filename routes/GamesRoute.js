@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const gameSchema = new mongoose.Schema({
   game_id: String,
   challengeName: String,
+  challenge_icon: String,
   description: String,
   setup: String,
   contractCode: String,
