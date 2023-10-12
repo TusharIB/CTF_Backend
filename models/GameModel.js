@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const gameSchema = new mongoose.Schema({
   game_id: String,
-  game_icon: String,
+  challenge_icon: String,
   game_name: String,
   author_name: String,
   game_contract_address: String,
