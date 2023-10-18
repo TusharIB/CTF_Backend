@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
       result: { type: Boolean, default: false },
     },
   ],
+  completedChallenge: [String]
 });
 
 const User = mongoose.model('User', userSchema);
