@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const { v4: uuidv4 } = require('uuid');
 const gameSchema = new mongoose.Schema({
   game_id: String,
   challengeName: String,
@@ -68,7 +68,21 @@ router.get('/getall_games', async (req, res) => {
 // Create a New Game
 router.post('/create_challenge', async (req, res) => {
   try {
-    const newGame = new Game(req.body);
+    const newGame = new Game({
+      challengeName: req.body.challengeName,
+      description: req.body.description,
+      setup: req.body.setup,
+      contractCode: req.body.contractCode,
+      challenge: req.body.challenge,
+      hints: req.body.hints,
+      explanation: req.body.explanation,
+      captured: req.body.captured,
+      address: req.body.address,
+      difficulty_level: req.body.difficulty_level,
+      solution: req.body.solution,
+      flag: req.body.flag,
+      game_id: uuidv4(),
+    });
     const savedGame = await newGame.save();
     res.status(201).json(savedGame);
   } catch (error) {
