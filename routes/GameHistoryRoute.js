@@ -50,7 +50,9 @@ router.post('/submit_answer', async (req, res) => {
     };
 
     user.played_Events.push(playedEvent);
+    if (result == true){
     user.completedChallenge.push(game_id);
+    }
     await user.save();
 
     res.status(201).json(savedGameHistory);
